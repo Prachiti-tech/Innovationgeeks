@@ -4,12 +4,15 @@ import 'package:commitment/wd.dart';
 import 'package:commitment/pd.dart';
 import 'package:commitment/bk.dart';
 import 'package:commitment/ana.dart';
+import 'package:commitment/widgets/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/dic.dart';
 import 'package:commitment/pdf.dart';
 import 'package:commitment/pre.dart';
 import 'basicpage.dart';
 import 'package:commitment/quiz.dart';
+import 'package:commitment/login.dart';
+import 'package:http/http.dart';
   void main() {
 
   runApp(MyApp());
@@ -23,6 +26,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
+      debugShowCheckedModeBanner: false,
+      home: RegisterScreen(),
       routes: {
         '/le':(context)=>Lear(),
         '/ad':(context)=>Advpage(),
@@ -35,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/pre':(context)=>Pre(),
         '/qu':(context)=>Quiz(),
       },
-      home: LevelPage(a: "Advanced",)//Lear()
+      /*home: LevelPage(a: "Advanced",)//Lear()*/
       
     );
   } 

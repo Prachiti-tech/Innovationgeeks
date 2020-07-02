@@ -67,7 +67,15 @@ class Lear extends StatelessWidget {
            child: ListTile(title:Text("Premium"),leading: Image.asset("lib/images/crown.png"),onTap:(){
                Navigator.pushNamed(context,'/pre' );
            }, ),
+         ),
+         Divider(),
+         Padding(
+           padding: const EdgeInsets.only(top:20.0,left:12.0),
+           child: ListTile(title:Text("Logout"),leading: Image.asset("lib/images/logout.png"),onTap:(){
+               Navigator.pushNamed(context,'/logout' );
+           }, ),
          )
+
 
        ],)
     ),
