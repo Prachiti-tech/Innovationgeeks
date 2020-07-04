@@ -1,9 +1,29 @@
 import 'package:commitment/main.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/widgets/conceptcard.dart';
+import 'package:http/http.dart' as http;
 //import 'drawer.dart';
-class Lear extends StatelessWidget {
+class Lear extends StatefulWidget {
   
+  @override
+  _LearState createState() => _LearState();
+}
+
+class _LearState extends State<Lear> {
+  List l;
+
+  void getData()async{
+    http.Response response=await http.get("https://a4b093956541.ngrok.io/basic");
+    print(response.body);
+    setState(() {
+      l= [response.body];
+    });
+
+  }
+  @override
+  void initState() {
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,21 +43,6 @@ class Lear extends StatelessWidget {
            padding: const EdgeInsets.only(top:20.0,left:12.0),
            child: ListTile(title:Text("Books"),leading: Image.asset("lib/images/Books.png"),onTap: (){
              Navigator.pushNamed(context, '/bk');
-           },),
-         ),
-         Divider(),
-
-         Padding(
-           padding: const EdgeInsets.only(top:20.0,left:12.0),
-           child: ListTile(title:Text("Today's Word"),leading: Image.asset("lib/images/w.png"),onTap: (){
-             Navigator.pushNamed(context, '/wd');
-           },),
-         ),
-         Divider(),
-         Padding(
-           padding: const EdgeInsets.only(top:20.0,left:12.0),
-           child: ListTile(title:Text("Today's phrase"),leading: Image.asset("lib/images/p.png"),onTap: (){
-             Navigator.pushNamed(context, '/pd');
            },),
          ),
          Divider(),
@@ -94,21 +99,13 @@ class Lear extends StatelessWidget {
                   title: Text("Basic",style: TextStyle(fontFamily:"Daddy",fontSize: 33.3),),
                 ),
               ),
-               SliverFixedExtentList(
-                itemExtent:150.0,
-                delegate:SliverChildListDelegate(
-                  
-                  [
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://alison.com/course/speaking-and-writing-english-effectively"),
-                    ConceptCard(l:"https://www.learnnow.com/find?q=online%20english%20learning%20free%20course&caid=lradus00301&poalq=11712373&gclid=Cj0KCQjw0Mb3BRCaARIsAPSNGpVjKHrW1s6Jm48VTha3XnF0lKMHj94H4sdV7RTtsI5EX06wOR6TVGMaAjY-EALw_wcB"),
-                    ConceptCard(l:"https://www.talkenglish.com/"),
-                    ConceptCard(l:"https://www.oxfordonlineenglish.com/free-spoken-english-lessons"),
-                   ConceptCard(l:"https://www.oxfordonlineenglish.com/free-spoken-english-lessons"),
-                   ConceptCard(l:"https://www.oxfordonlineenglish.com/free-spoken-english-lessons"),
-                   ConceptCard(l:"https://www.oxfordonlineenglish.com/free-spoken-english-lessons"),
-                ]
-                ),
+               SliverList(
+                
+                delegate:SliverChildBuilderDelegate(
+                  (BuildContext context,int index){
+                    return ConceptCard(l: l[index],);
+                  }
+                )
               ),
             ],
         ),

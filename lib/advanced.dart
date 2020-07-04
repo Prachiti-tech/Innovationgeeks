@@ -1,9 +1,28 @@
 import 'package:commitment/main.dart';
-import 'package:commitment/wd.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/widgets/conceptcard.dart';
+import 'package:http/http.dart'as http;
 //import 'drawer.dart';
-class Advpage extends StatelessWidget {
+class Advpage extends StatefulWidget {
+  @override
+  _AdvpageState createState() => _AdvpageState();
+}
+
+class _AdvpageState extends State<Advpage> {
+   List l;
+
+  void getData()async{
+    http.Response response=await http.get("/advanced");
+    print(response.body);
+    setState(() {
+      l=[response.body];
+    });
+  }
+  @override
+  void initState() {
+    getData();
+    
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,21 +40,6 @@ class Advpage extends StatelessWidget {
            padding: const EdgeInsets.only(top:20.0,left:12.0),
            child: ListTile(title:Text("Books"),leading: Image.asset("lib/images/Books.png"),onTap: (){
               Navigator.pushNamed(context, '/bk');
-           },),
-         ),
-         Divider(),
-
-         Padding(
-           padding: const EdgeInsets.only(top:20.0,left:12.0),
-           child: ListTile(title:Text("Today's Word"),leading: Image.asset("lib/images/w.png"),onTap: (){
-             Navigator.pushNamed(context,'/wd');
-           },),
-         ),
-         Divider(),
-         Padding(
-           padding: const EdgeInsets.only(top:20.0,left:12.0),
-           child: ListTile(title:Text("Today's phrase"),leading: Image.asset("lib/images/p.png"),onTap: (){
-             Navigator.pushNamed(context,'/pd');
            },),
          ),
          Divider(),
@@ -89,24 +93,14 @@ class Advpage extends StatelessWidget {
                   title: Text("Advanced",style: TextStyle(fontFamily:"Daddy",fontSize: 33.3)),
                 ),
               ),
-               SliverFixedExtentList(
-                itemExtent: 150.0,
-                delegate:SliverChildListDelegate(
-                  
-                  [
-                    ConceptCard(l:"https://www.britishcouncil.in/english/online/classes/myenglish"),
-                    ConceptCard(l:"https://www.talkenglish.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                    ConceptCard(l:"https://perfectlyspoken.com/"),
-                   
-
-
-                ]
-                ),
+                SliverList(
+                
+                delegate:SliverChildBuilderDelegate(
+                  (BuildContext context,int index){
+                    return ConceptCard(l: l[index],);
+                  },
+                  childCount: l.length,
+                )
               ),
             ],
         ),

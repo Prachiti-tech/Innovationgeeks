@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import  'package:url_launcher/url_launcher.dart';
 class ConceptCard extends StatelessWidget {
-  ConceptCard({this.s,this.l});
-  final String s;
-  final String l;
+  ConceptCard({this.l});
+  final List l;
   //_launchURL() 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +10,7 @@ class ConceptCard extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: GestureDetector(
        onTap: ()async {
-        var url =l  ;
+        var url =l[0];
         if (await canLaunch(url)) {
         await launch(url);
         } else {
@@ -34,13 +33,10 @@ class ConceptCard extends StatelessWidget {
         child: Wrap(
         //  direction: Axis.vertical,
               children: <Widget>[
-               Text(l),
-               
+               Text(l[1]),
               ],
-          ),
+                 ),
                 ),
-
-
               ),
           ),
       ),
