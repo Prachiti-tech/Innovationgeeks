@@ -25,7 +25,7 @@ class ConceptCard extends StatelessWidget {
             borderRadius: new BorderRadius.circular(12.0),
            ),
           child: Container(
-                height: 275,
+                height: 125,
                 width: 300,
 
                 child: Padding(

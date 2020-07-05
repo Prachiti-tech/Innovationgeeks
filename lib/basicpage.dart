@@ -2,7 +2,15 @@ import 'package:commitment/main.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/widgets/conceptcard.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 //import 'drawer.dart';
+
+class BasLinks{
+  BasLinks(this.des, this.lin);
+  String des;
+  String lin;
+}
+
 class Lear extends StatefulWidget {
   
   @override
@@ -10,20 +18,19 @@ class Lear extends StatefulWidget {
 }
 
 class _LearState extends State<Lear> {
-  List l;
+  List l=[];
 
-  void getData()async{
-    http.Response response=await http.get("https://a4b093956541.ngrok.io/basic");
-    print(response.body);
-    setState(() {
-      l= [response.body];
-    });
-
+  Future<List> getData()async{
+    http.Response response=await http.get("https://eb638c246853.ngrok.io/basic");
+   // print(response.body);
+    Map jso =jsonDecode(response.body);
+    //print(jso);
+   setState(() {
+     jso.entries.forEach((e) => l.add([e.key, e.value]));
+   });
+    return [jso];
   }
-  @override
-  void initState() {
-    getData();
-  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -99,14 +106,49 @@ class _LearState extends State<Lear> {
                   title: Text("Basic",style: TextStyle(fontFamily:"Daddy",fontSize: 33.3),),
                 ),
               ),
-               SliverList(
-                
-                delegate:SliverChildBuilderDelegate(
-                  (BuildContext context,int index){
-                    return ConceptCard(l: l[index],);
-                  }
-                )
-              ),
+
+              
+
+              FutureBuilder(
+
+                 future: getData(),
+                 builder: (context,snapshot){
+                   if(snapshot.data==null){
+                     return SliverList(
+                  delegate: SliverChildListDelegate([
+                    CircularProgressIndicator()
+                   ],
+                  ),
+                  
+                  );
+                   }
+                   else{
+                     return SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    
+                    (BuildContext context,int index){
+                      
+                       return ConceptCard(l: l[index],);
+                       
+                       },
+                       childCount: 4
+                       
+                  )
+                  );
+                   }
+                 }
+                    
+                    
+                    /* SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    (BuildContext context,int index){
+                     return ConceptCard(l: l[index],);
+                    }
+                  )
+              ),*/
+               ),
             ],
         ),
       ),

@@ -42,6 +42,7 @@ class _DicState extends State<Dic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.cyanAccent[400],
         title: Text("Dictionary"),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(48.0),

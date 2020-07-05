@@ -4,7 +4,7 @@ class Pre extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(title:Text("Premium"))
+      appBar:AppBar(title:Text("Premium"),backgroundColor: Colors.cyanAccent[400],)
       
     );
   }

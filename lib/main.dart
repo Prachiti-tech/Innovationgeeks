@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home:Lear(),
+      home:LevelPage(a: "Advanced",),
       routes: {
         '/le':(context)=>Lear(),
         '/ad':(context)=>Advpage(),

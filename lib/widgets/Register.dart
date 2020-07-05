@@ -4,8 +4,8 @@ import 'package:commitment/constants.dart';
 import 'package:http/http.dart'as http;
 import 'dart:convert';
 
-Future<List> signup(String username,String email,String password) async {
-  String url="https://a4b093956541.ngrok.io/register";
+Future<List> signup(String username,String email,String password,String confirmpass) async {
+  String url="https://eb638c246853.ngrok.io/register";
   final http.Response response = await http.post(
     '$url',
     headers:<String,String> {
@@ -16,7 +16,7 @@ Future<List> signup(String username,String email,String password) async {
       'username': username,
       'email': email,
       'password': password,
-     // 'confirm_password':confirmpass
+     'confirm_password':confirmpass
       
     }),
   );
@@ -199,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                              )
                         ),
-                      /*  Padding(
+                       Padding(
                           padding: const EdgeInsets.all(20.0),
                           child:  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
 
                              )
-                        ),*/
+                        ),
                          Padding(
                            padding: const EdgeInsets.only(top:12.0),
                            child: RaisedButton(
@@ -255,7 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               print(_pass.text);
                               print(_conpass.text);
                                if(_signupKey.currentState.validate()){ 
-                              _response = await signup(_username.text, _email.text, _pass.text);
+                              _response = await signup(_username.text, _email.text, _pass.text,_conpass.text);
                                String text;
                                  bool flag = false;
                                     if(_response[0] == "success"){
