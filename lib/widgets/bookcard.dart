@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import  'package:url_launcher/url_launcher.dart';
-class ConceptCard extends StatelessWidget {
-  ConceptCard({this.l});
+class BookCard extends StatelessWidget {
+  BookCard({this.l});
   final List l;
   //_launchURL() 
   @override
@@ -19,7 +19,7 @@ class ConceptCard extends StatelessWidget {
         },
         child: Card
         (
-          color: Color(0xFF76FF03),
+          color: Colors.orangeAccent,
           elevation: 10.0,
           shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(12.0),

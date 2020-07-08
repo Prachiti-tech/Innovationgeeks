@@ -1,9 +1,9 @@
+import 'package:commitment/widgets/result.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/LevelButton.dart';
 
 class LevelPage extends StatelessWidget {
- LevelPage({this.a});
- final String a;
+ 
  final Color active = Colors.yellowAccent;
  final Color inactive =Colors.grey;
  @override
@@ -35,7 +35,7 @@ class LevelPage extends StatelessWidget {
                                                   
                          Padding(
                             padding: const EdgeInsets.all(50.0),
-                            child: Levelbutton(s:"Advanced",c: a=="Basic"? inactive:active),
+                            child: Levelbutton(s:"Advanced",c: result=="Basic"? inactive:active),
                           )
                         ]
                       ),

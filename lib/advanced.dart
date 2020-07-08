@@ -2,30 +2,30 @@ import 'package:commitment/main.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/widgets/conceptcard.dart';
 import 'package:http/http.dart'as http;
-//import 'drawer.dart';
+import 'dart:convert'; 
+import 'constants.dart';
 class Advpage extends StatefulWidget {
   @override
   _AdvpageState createState() => _AdvpageState();
 }
 
 class _AdvpageState extends State<Advpage> {
-   List l;
+    List l=[];
 
-  void getData()async{
-    http.Response response=await http.get("/advanced");
-    print(response.body);
-    setState(() {
-      l=[response.body];
-    });
-  }
-  @override
-  void initState() {
-    getData();
-    
+  Future<List> getData()async{
+    http.Response response=await http.get("https://a1eb4123d827.ngrok.io/advanced");
+   // print(response.body);
+    Map jso =jsonDecode(response.body);
+    //print(jso);
+   setState(() {
+     jso.entries.forEach((e) => l.add([e.key, e.value]));
+   });
+    return [jso];
   }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
           home: SafeArea(
                       child: Scaffold(
               drawer: Drawer(
@@ -63,13 +63,13 @@ class _AdvpageState extends State<Advpage> {
              Navigator.pushNamed(context, '/pdf');
            }, ),
          ),
-         Divider(),
+        /* Divider(),
          Padding(
            padding: const EdgeInsets.only(top:20.0,left:12.0),
            child: ListTile(title:Text("Premium"),leading: Image.asset("lib/images/crown.png"),onTap: (){
              Navigator.pushNamed(context, '/pre');
            },),
-         ),
+         ),*/
          Divider(),
          Padding(
            padding: const EdgeInsets.only(top:20.0,left:12.0),
@@ -93,15 +93,50 @@ class _AdvpageState extends State<Advpage> {
                   title: Text("Advanced",style: TextStyle(fontFamily:"Daddy",fontSize: 33.3)),
                 ),
               ),
-                SliverList(
-                
-                delegate:SliverChildBuilderDelegate(
-                  (BuildContext context,int index){
-                    return ConceptCard(l: l[index],);
-                  },
-                  childCount: l.length,
-                )
-              ),
+                FutureBuilder(
+
+                 future: getData(),
+                 builder: (context,snapshot){
+                   if(snapshot.data==null){
+                     return SliverList(
+                  delegate: SliverChildListDelegate([
+                   SizedBox(
+                      height: 200.0,
+                      width: 200.0,
+                       child: spinkit
+                   )
+                   ],
+                  ),
+                  
+                  );
+                   }
+                   else{
+                     return SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    
+                    (BuildContext context,int index){
+                      
+                       return ConceptCard(l: l[index],);
+                       
+                       },
+                       childCount: 3
+                       
+                  )
+                  );
+                   }
+                 }
+                    
+                    
+                    /* SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    (BuildContext context,int index){
+                     return ConceptCard(l: l[index],);
+                    }
+                  )
+              ),*/
+               ),
             ],
         ),
       ),

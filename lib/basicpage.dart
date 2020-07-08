@@ -2,7 +2,14 @@ import 'package:commitment/main.dart';
 import 'package:flutter/material.dart';
 import 'package:commitment/widgets/conceptcard.dart';
 import 'package:http/http.dart' as http;
-//import 'drawer.dart';
+import 'dart:convert';
+import 'constants.dart';
+class BasLinks{
+  BasLinks(this.des, this.lin);
+  String des;
+  String lin;
+}
+
 class Lear extends StatefulWidget {
   
   @override
@@ -10,23 +17,23 @@ class Lear extends StatefulWidget {
 }
 
 class _LearState extends State<Lear> {
-  List l;
+  List l=[];
 
-  void getData()async{
-    http.Response response=await http.get("https://a4b093956541.ngrok.io/basic");
-    print(response.body);
-    setState(() {
-      l= [response.body];
-    });
-
+  Future<List> getData()async{
+    http.Response response=await http.get("https://a1eb4123d827.ngrok.io/basic");
+   // print(response.body);
+    Map jso =jsonDecode(response.body);
+    //print(jso);
+   setState(() {
+     jso.entries.forEach((e) => l.add([e.key, e.value]));
+   });
+    return [jso];
   }
-  @override
-  void initState() {
-    getData();
-  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
           home: SafeArea(
                       child: Scaffold(
                   
@@ -66,13 +73,13 @@ class _LearState extends State<Lear> {
               Navigator.pushNamed(context, '/pdf');
            }, ),
          ),
-         Divider(),
+        /* Divider(),
          Padding(
            padding: const EdgeInsets.only(top:20.0,left:12.0),
            child: ListTile(title:Text("Premium"),leading: Image.asset("lib/images/crown.png"),onTap:(){
                Navigator.pushNamed(context,'/pre' );
            }, ),
-         ),
+         ),*/
          Divider(),
          Padding(
            padding: const EdgeInsets.only(top:20.0,left:12.0),
@@ -99,14 +106,53 @@ class _LearState extends State<Lear> {
                   title: Text("Basic",style: TextStyle(fontFamily:"Daddy",fontSize: 33.3),),
                 ),
               ),
-               SliverList(
-                
-                delegate:SliverChildBuilderDelegate(
-                  (BuildContext context,int index){
-                    return ConceptCard(l: l[index],);
-                  }
-                )
-              ),
+
+              
+
+              FutureBuilder(
+
+                 future: getData(),
+                 builder: (context,snapshot){
+                   if(snapshot.data==null){
+                     return SliverList(
+                  delegate: SliverChildListDelegate([
+                   SizedBox(
+                      height: 200.0,
+                      width: 200.0,
+                       child: spinkit
+                   )
+                   ],
+                  ),
+                  
+                  );
+                   }
+                   else{
+                     return SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    
+                    (BuildContext context,int index){
+                      
+                       return ConceptCard(l: l[index],);
+                       
+                       },
+                       childCount: 4
+                       
+                  )
+                  );
+                   }
+                 }
+                    
+                    
+                    /* SliverList(
+                  
+                  delegate:SliverChildBuilderDelegate(
+                    (BuildContext context,int index){
+                     return ConceptCard(l: l[index],);
+                    }
+                  )
+              ),*/
+               ),
             ],
         ),
       ),

@@ -1,34 +1,15 @@
 import 'package:commitment/levelpage.dart';
 import 'package:commitment/quizhard.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 String result;
-
-         /* Widget decide(){
-          Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-                  Future<bool> o = prefs.getBoolValuesSF('quizTaken');
-                  if(o == true){
-                    return LevelPage();
-                  }
-                  else{
-                    return Shivaji();
-                  }
-
-                }
-
-void addBoolToSF() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('quizTaken', true);
-}*/
-
-class Result extends StatefulWidget {
+class Result2 extends StatefulWidget {
   
   @override
-  _ResultState createState() => _ResultState();
+  _Result2State createState() => _Result2State();
 }
 
-class _ResultState extends State<Result> {
+class _Result2State extends State<Result2> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,9 +23,6 @@ class _ResultState extends State<Result> {
                child: Text('Next'),
              
              onPressed: (){
-
-              
-               
                setState(() {
                  if(Score>7){
                  result="Advanced";

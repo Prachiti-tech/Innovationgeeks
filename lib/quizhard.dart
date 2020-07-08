@@ -10,14 +10,14 @@ class Question{
   
 }
 
-class Sambhaji extends StatefulWidget {
+class Shivaji extends StatefulWidget {
 
 
   @override
-  _SambhajiState createState() => _SambhajiState();
+  _ShivajiState createState() => _ShivajiState();
 }
 
-class _SambhajiState extends State<Sambhaji> {
+class _ShivajiState extends State<Shivaji> {
   
 
   List<Icon> a=[];
